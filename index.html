@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b12">
+<title>CS2 COLORFORGE</title>
+<style>
+:root{--bg:#090b12;--panel:#121622;--panel2:#191f2d;--line:#293246;--text:#f4f6fb;--muted:#9aa6bc;--accent:#8b5cf6;--cyan:#38bdf8;--good:#34d399}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#262044 0,#090b12 52%);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:900px;margin:auto;padding:20px 15px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.brand{font-weight:900;letter-spacing:1.6px;font-size:18px}.brand span{color:#a78bfa}.tag{color:var(--muted);font-size:11px;letter-spacing:1.4px}
+.hero{padding:23px 20px;border:1px solid #393052;border-radius:22px;background:linear-gradient(130deg,#211a3b,#121622 65%);margin-bottom:16px}
+h1{font-size:clamp(28px,7vw,44px);line-height:1.02;margin:5px 0 10px}.hero p{color:#c3c7d5;margin:0;line-height:1.5}.pill{display:inline-block;border:1px solid #514078;color:#c4b5fd;border-radius:99px;padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:1px}
+.panel{background:rgba(18,22,34,.96);border:1px solid var(--line);border-radius:18px;padding:17px;margin:13px 0}
+h2{font-size:16px;margin:0 0 13px}.muted{color:var(--muted);font-size:12px}
+.colors{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.color{border:1px solid #354056;background:#1a2030;color:white;border-radius:12px;padding:10px 3px 8px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.color.active{border-color:#c4b5fd;box-shadow:0 0 0 2px #8b5cf655;background:#28213d}.swatch{width:27px;height:27px;border-radius:50%;border:2px solid #ffffff55}
+.custom{display:flex;align-items:center;gap:10px;margin-top:13px}.custom input[type=color]{width:45px;height:38px;background:none;border:0;padding:0}.custom input[type=text]{flex:1;min-width:0}
+label{display:block;color:#c6cede;font-size:12px;margin:0 0 6px}input,select{background:#0c101a;border:1px solid #344056;color:white;border-radius:10px;padding:12px;width:100%;font:inherit}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.btn{border:0;border-radius:12px;padding:14px 16px;font-weight:800;font-size:14px;color:white;background:linear-gradient(100deg,#7c3aed,#4f46e5);width:100%;margin-top:14px}.btn.secondary{background:#252d40;border:1px solid #3b4862}.btn:active{transform:scale(.99)}.btn:disabled{opacity:.65}
+.summary{display:flex;justify-content:space-between;gap:10px;align-items:center}.total{font-size:24px;font-weight:900;color:#a7f3d0}.skin{display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);padding:13px 0}.skin:first-of-type{border-top:0}.skinart{width:76px;height:54px;flex:none;border-radius:10px;background:linear-gradient(135deg,#252e43,#121622);display:grid;place-items:center;overflow:hidden;font-size:26px}
+.skinart img{width:100%;height:100%;object-fit:contain;padding:3px;display:block}
+.skinart img.failed{display:none}.fallback{display:grid;place-items:center;width:100%;height:100%;font-size:22px}.skininfo{min-width:0;flex:1}.skininfo strong{font-size:13px;display:block}.skininfo small{color:var(--muted);font-size:11px}.price{text-align:right;font-weight:800;font-size:13px;white-space:nowrap}.market{color:#a5b4fc;font-size:10px;font-weight:600}
+.notice{padding:11px 12px;background:#1b2232;border-radius:10px;color:#b9c5d8;font-size:11px;line-height:1.5;margin-top:12px}
+footer{text-align:center;color:#647087;font-size:11px;padding:22px 4px}
+@media(min-width:650px){.colors{grid-template-columns:repeat(9,1fr)}.wrap{padding-top:28px}.panel{padding:21px}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="top"><div><div class="brand">CS2 <span>COLORFORGE</span></div><div class="tag">BUILD YOUR PERFECT INVENTORY</div></div><span class="pill">MOBILE EDITION</span></header>
+<section class="hero"><span class="pill">LOADOUT GENERATOR</span><h1>Your color.<br> Your loadout.</h1><p>Build a coordinated Counter-Strike 2 inventory with real skin artwork and live marketplace prices.</p></section>
+<section class="panel"><h2>01 / Choose your color</h2><div class="colors" id="colors"></div><div class="custom"><input type="color" id="picker" value="#8b5cf6" aria-label="Custom color"><input type="text" id="hex" value="#8B5CF6" maxlength="7" aria-label="Hex color code"></div></section>
+<section class="panel"><h2>02 / Set your budget</h2><div class="grid2"><div class="field"><label for="budget">Maximum budget</label><input id="budget" type="number" min="1" value="5000"></div><div class="field"><label for="currency">Currency</label><select id="currency"><option value="NAD">Namibian Dollar (NAD)</option><option value="ZAR">South African Rand (ZAR)</option></select></div><div class="field"><label for="market">Marketplace</label><select id="market"><option value="all">Steam + third-party</option><option value="steam">Steam only</option><option value="third">Third-party only</option></select></div><div class="field"><label for="style">Loadout selection</label><select id="style"><option value="curated">Curated full-weapon set</option></select></div></div><button class="btn" id="generate">GENERATE MY LOADOUT ↗</button></section>
+<section class="panel" id="results"><div class="summary"><div><h2 style="margin:0">Your loadout</h2><div class="muted" id="subtitle">Choose a color and generate a set.</div></div><div class="total" id="total">—</div></div><div id="imageStatus" class="muted" style="padding-top:8px">Skin artwork loads from the CS2 item catalogue.</div><div id="items" class="muted" style="padding-top:16px">Generate a complete set covering rifles, pistols, SMGs and heavy weapons.</div><div class="notice">Prices are fetched from Steam Community Market, Skinport and CSFloat where available. The best live result is shown first, with links to each marketplace result. No demo prices are used; unavailable prices stay unavailable. Skin artwork comes from the CS2 item catalogue.</div><button class="btn secondary" id="again">↻ GENERATE ANOTHER</button></section>
+<footer>CS2 COLORFORGE · Independent community project · Not affiliated with Valve</footer>
+</main>
+<script>
+const palette=[["Red","#ef4444"],["Blue","#3b82f6"],["Purple","#8b5cf6"],["Pink","#ec4899"],["Green","#22c55e"],["Black","#252936"],["White","#e5e7eb"],["Gold","#eab308"],["Orange","#f97316"]];
+let selected="#8b5cf6", skinImages=new Map(), skinPrices=new Map(), fx={NAD:1,ZAR:1}, lastItems=[];
+const el=id=>document.getElementById(id);
+const weapons=[
+["Rifles",[["AK-47","Neon Rider"],["M4A4","The Emperor"],["M4A1-S","Decimator"],["Galil AR","Sugar Rush"],["FAMAS","Mecha Industries"],["AUG","Akihabara Accept"],["SG 553","Integrale"],["AWP","Neo-Noir"],["SSG 08","Dragonfire"],["G3SG1","Flux"],["SCAR-20","Cyrex"]]],
+["Pistols",[["Glock-18","Vogue"],["USP-S","Printstream"],["P2000","Ocean Foam"],["Dual Berettas","Urban Shock"],["P250","Asiimov"],["Five-SeveN","Hyper Beast"],["Tec-9","Fuel Injector"],["CZ75-Auto","Tacticat"],["Desert Eagle","Code Red"],["R8 Revolver","Fade"]]],
+["SMGs",[["MAC-10","Neon Rider"],["MP9","Starlight Protector"],["MP7","Bloodsport"],["MP5-SD","Phosphor"],["UMP-45","Exposure"],["P90","Asiimov"],["PP-Bizon","Judgement of Anubis"]]],
+["Heavy",[["Nova","Hyper Beast"],["XM1014","Tranquility"],["MAG-7","Justice"],["Sawed-Off","The Kraken"],["M249","Nebula Crusader"],["Negev","Power Loader"]]]
+];
+const extras=[["Knife","★ Karambit | Doppler"],["Gloves","★ Specialist Gloves | Fade"]];
+function renderPalette(){el("colors").innerHTML=palette.map(([n,c])=>`<button class="color ${selected.toLowerCase()===c.toLowerCase()?'active':''}" data-color="${c}"><span class="swatch" style="background:${c}"></span>${n}</button>`).join("");document.querySelectorAll(".color").forEach(b=>b.onclick=()=>setColor(b.dataset.color));}
+function setColor(c){selected=c;el("picker").value=c;el("hex").value=c.toUpperCase();renderPalette();}
+el("picker").addEventListener("input",e=>setColor(e.target.value));el("hex").addEventListener("change",e=>{let v=e.target.value.trim();if(/^#[0-9a-fA-F]{6}$/.test(v))setColor(v);});
+function hexToRgb(h){return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));}
+function nearestColor(){let rgb=hexToRgb(selected),best="purple",dist=Infinity;for(const [n,c] of palette){let x=hexToRgb(c),d=rgb.reduce((s,v,i)=>s+(v-x[i])**2,0);if(d<dist){dist=d;best=n.toLowerCase();}}return best;}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function loadSkinImages(){
+  try{
+    const r=await fetch("/api/catalogue");
+    if(!r.ok) throw Error("Skin catalogue HTTP "+r.status);
+    const data=await r.json();
+    for(const x of data){
+      if(x.name && x.image) skinImages.set(x.name.toLowerCase(),x.image);
+    }
+    if(lastItems.length) renderItems(lastItems);
+  }catch(e){
+    console.warn("Skin artwork catalogue unavailable",e);
+    el("imageStatus").textContent="Skin artwork could not load. Check the hosted backend connection.";
+  }
+}
+async function loadFx(){
+  try{
+    const r=await fetch("/api/rates");
+    if(!r.ok) throw Error("Exchange-rate service HTTP "+r.status);
+    const d=await r.json();
+    fx.NAD=d.NAD; fx.ZAR=d.ZAR;
+  }catch(e){
+    console.warn("Exchange-rate service unavailable",e);
+    fx.NAD=null; fx.ZAR=null;
+  }
+}
+async function getLivePrice(weapon,skin,market){
+  const q=new URLSearchParams({weapon,skin,market});
+  const r=await fetch("/api/price?"+q.toString());
+  if(!r.ok) throw Error("Price service HTTP "+r.status);
+  const d=await r.json();
+  return d.prices || (d.price ? [d.price] : []);
+}
+function thumb(weapon,skin){
+  const prefix=`${weapon} | ${skin}`.toLowerCase();
+  let url=skinImages.get(prefix);
+  if(!url){
+    const found=[...skinImages.entries()].find(([k])=>k===prefix || k.startsWith(prefix+" ("));
+    url=found?.[1];
+  }
+  if(url) return `<img src="${esc(url)}" alt="${esc(weapon+" | "+skin)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`;
+  return `<span class="fallback">🎨</span>`;
+}
+function priceLabel(prices,currency){if(!prices || !prices.length)return `<div class="price">—<div class="market">NO LIVE LISTING</div></div>`;if(!fx[currency])return `<div class="price">—<div class="market">CURRENCY RATE UNAVAILABLE</div></div>`;const sym=currency==="NAD"?"N$":"R",best=prices[0],bestValue=best.usd*fx[currency];const rows=prices.map(p=>{const value=(p.usd*fx[currency]).toFixed(2);const href=p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener" style="color:#a5b4fc;text-decoration:none">${esc(p.source)} ${sym}${value}</a>`:`${esc(p.source)} ${sym}${value}`;return `<div>${href}</div>`;}).join("");return `<div class="price">${sym}${bestValue.toFixed(2)}<div class="market">BEST LIVE PRICE</div><div class="market" style="font-weight:500;line-height:1.5;margin-top:4px">${rows}</div></div>`;}
+function renderItems(items){let out="",sum=0,count=0;for(const group of ["Rifles","Pistols","SMGs","Heavy"]){out+=`<div style="padding:13px 0 5px;color:#c4b5fd;font-size:11px;font-weight:900;letter-spacing:1.4px">${group.toUpperCase()}</div>`;for(const item of items.filter(x=>x.group===group)){const prices=item.prices||[];const best=prices[0]||null;if(best && fx[el("currency").value]){sum+=best.usd*fx[el("currency").value];count++;}out+=`<div class="skin"><div class="skinart">${thumb(item.weapon,item.skin)}<span class="fallback" style="display:none">🎨</span></div><div class="skininfo"><strong>${esc(item.weapon)} | ${esc(item.skin)}</strong><small>${prices.length?`${prices.length} live marketplace result(s)`:"No live listing found"}</small></div>${priceLabel(prices,el("currency").value)}</div>`;}}
+ el("items").innerHTML=out;const sym=el("currency").value==="NAD"?"N$":"R";el("total").textContent=count?`${sym}${sum.toFixed(2)}`:"—";el("subtitle").textContent=`${nearestColor()} theme · ${items.length} weapon slots · ${count} with live prices · ${el("currency").value}`;const note=document.createElement("div");note.className="notice";const budget=Number(el("budget").value);const complete=count===items.length;const converted=fx[el("currency").value];const over=complete&&converted&&budget>0&&sum>budget;note.textContent=`Best available live listing per weapon is used for the total. ${count} of ${items.length} weapons have live prices; unavailable items are excluded, so the total is a partial minimum. ${over?"The complete priced set is over your budget.":(complete?"All weapon prices were found; compare the total with your budget.":"A budget comparison is incomplete until every weapon has a live price.")} Prices are converted from USD using a live exchange-rate feed; checkout totals may differ.`;el("items").appendChild(note);}
+async function generate(){const market=el("market").value;el("generate").disabled=true;el("generate").textContent="FETCHING LIVE MARKET DATA…";el("total").textContent="…";el("subtitle").textContent="Checking Steam and third-party listings";el("items").innerHTML='<div class="notice">Loading real skin artwork and marketplace listings. This can take a little while.</div>';try{await loadFx();const list=[];for(const [group,slots] of weapons)for(const [weapon,skin] of slots)list.push({group,weapon,skin,prices:[]});lastItems=list;let index=0;async function worker(){while(index<list.length){const i=index++;const x=list[i];try{x.prices=await getLivePrice(x.weapon,x.skin,market);}catch(err){console.warn("Price lookup failed",x.weapon,x.skin,err);x.prices=[];}}}await Promise.all(Array.from({length:4},worker));renderItems(list);}catch(e){el("items").innerHTML='<div class="notice">Live price services could not be reached. No sample prices have been substituted. Please try again later or check your connection.</div>';el("total").textContent="—";el("subtitle").textContent="Live market data unavailable";}finally{el("generate").disabled=false;el("generate").textContent="GENERATE MY LOADOUT ↗";}}
+el("generate").onclick=generate;el("again").onclick=generate;el("currency").addEventListener("change",()=>{if(lastItems.length)renderItems(lastItems);});renderPalette();loadSkinImages();
+</script></body></html>
